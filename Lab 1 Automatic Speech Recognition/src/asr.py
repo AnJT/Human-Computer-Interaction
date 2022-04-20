@@ -39,17 +39,19 @@ class WorkThread(QThread):
     def run(self):
         r = sr.Recognizer()
         mic = sr.Microphone()
-        commands = ['play music', 'open notepad', 'open calculator']
+        commands = ['play music', 'open notepad', 'open the calculator']
         os_commands = [r'resources\打上花火.mp3', 'notepad', 'calc']
         while True:
             guess = self.recognize_speech_from_mic(r, mic)
             if guess["error"]:
                 self.trigger_show.emit("ERROR: {}".format(guess["error"]))
-                break
+                time.sleep(3)
+                self.trigger_hide.emit()
+                continue
             print(guess["transcription"])
             similar = [self.string_similar(guess["transcription"], command) for command in commands]
             print(similar)
-            if max(similar) < 0.3:
+            if max(similar) < 0.2:
                 self.trigger_show.emit("I didn't catch that. What did you say?")
                 time.sleep(3)
                 self.trigger_hide.emit()
@@ -68,11 +70,9 @@ class WorkThread(QThread):
             raise TypeError("`recognizer` must be `Recognizer` instance")
         if not isinstance(microphone, sr.Microphone):
             raise TypeError("`microphone` must be `Microphone` instance")
-
         with microphone as source:
-            recognizer.adjust_for_ambient_noise(source)
+            recognizer.adjust_for_ambient_noise(source, 0.5)
             audio = recognizer.listen(source)
-
         response = {
             "error": None,
             "transcription": None
