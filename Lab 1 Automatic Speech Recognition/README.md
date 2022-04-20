@@ -141,4 +141,4 @@ The accuracy of local speech recognition is quite outrageous. I have made the fo
 
 ## Interface
 
-![image-20220420233715914](https://typora-anjt.oss-cn-shanghai.aliyuncs.com/image-20220420233715914.png)
+![image-20220420234743809](https://typora-anjt.oss-cn-shanghai.aliyuncs.com/image-20220420234743809.png)

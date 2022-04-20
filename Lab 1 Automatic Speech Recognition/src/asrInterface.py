@@ -109,7 +109,7 @@ class Ui_MainWindow(object):
         self.label_2.setText(_translate("MainWindow", "You can:"))
         self.label_3.setText(_translate("MainWindow", "1. Enjoy music by saying \"Play music\""))
         self.label_4.setText(_translate("MainWindow", "2. Take some notes by saying \"Open Notepad\""))
-        self.label_5.setText(_translate("MainWindow", "3. Do some calculations by saying \"Open Calculator\""))
+        self.label_5.setText(_translate("MainWindow", "3. Do some calculations by saying \"Open the Calculator\""))
 
     def showRecUi(self, label_6_text):
         self.label_1.hide()
