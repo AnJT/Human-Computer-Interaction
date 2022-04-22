@@ -4,14 +4,14 @@
 
 - install conda environment
 
-  ```sh
+  ```shell
   conda env create -f requirements.yaml
   conda activate asr
   ```
 
 - replace .dic file
 
-  ```sh
+  ```shell
   cp pronounciation-dictionary.dict D:\Tools\Anaconda\envs\asr\lib\site-packages\speech_recognition\pocketsphinx-data\en-US\
   ```
 
@@ -138,6 +138,8 @@ The accuracy of local speech recognition is quite outrageous. I have made the fo
   ```
 
   Leaving only these words can improve the recognition rate of these words
+  
+  After changing this file, the accuracy can be almost 100%
 
 ## Interface
 
