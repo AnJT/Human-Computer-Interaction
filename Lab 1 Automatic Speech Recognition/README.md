@@ -9,7 +9,7 @@
   conda activate asr
   ```
 
-- replace .dic file
+- replace `.dict` file
 
   ```shell
   cp pronounciation-dictionary.dict D:\Tools\Anaconda\envs\asr\lib\site-packages\speech_recognition\pocketsphinx-data\en-US\
@@ -124,7 +124,7 @@ The accuracy of local speech recognition is quite outrageous. I have made the fo
 
 - Small range to improve accuracy
 
-  There are very few instructions we need to use, so we can delete the unnecessary content in the `.dic` file, leaving only the content that needs to be identified
+  There are very few instructions we need to use, so we can delete the unnecessary content in the `.dict` file, leaving only the content that needs to be identified
 
   E.g:
 
