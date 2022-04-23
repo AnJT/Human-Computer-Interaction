@@ -9,6 +9,8 @@
   conda activate asr
   ```
 
+  If the installation fails, please use `pip` to install or download wheel file to install manually
+
 - replace `.dict` file
 
   ```shell
