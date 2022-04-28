@@ -31,7 +31,7 @@ python asr.py
 
 - **Play music**
 - **Open Notepad**
-- **Open the calculator**
+- **Open the Calculator**
 
 ## The modifications to GUI and the codes
 
