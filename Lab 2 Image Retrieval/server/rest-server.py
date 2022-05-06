@@ -45,10 +45,6 @@ print("loaded extracted_features")
 #                                                                                                                              
 # ==============================================================================================================================
 @app.route('/imgUpload', methods=['GET', 'POST'])
-# def allowed_file(filename):
-#    return '.' in filename and \
-#           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
 def upload_img():
     print("image upload")
     result = 'static/result'
@@ -64,7 +60,7 @@ def upload_img():
             return redirect(request.url)
 
         file = request.files['file']
-        print(file.filename)
+        print('filename:', file.filename)
         # if user does not select file, browser also
         # submit a empty part without filename
         if file.filename == '':

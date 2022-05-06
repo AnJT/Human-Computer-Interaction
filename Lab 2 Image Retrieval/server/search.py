@@ -4,7 +4,8 @@
 # 
 ################################################################################################################################
 import random
-import tensorflow.compat.v1 as tf
+# import tensorflow.compat.v1 as tf
+import tensorflow._api.v2.compat.v1 as tf
 import numpy as np
 import imageio
 import os
