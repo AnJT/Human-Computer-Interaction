@@ -42,10 +42,8 @@ MAX_NUM_IMAGES_PER_CLASS = 2 ** 27 - 1  # ~134M
 def get_top_k_similar(image_data, pred, pred_final, k):
     print("total data", len(pred))
     print(image_data.shape)
-    # for i in pred:
-    # print(i.shape)
-    # break
-    os.mkdir('static/result')
+    if not os.path.exists('static/result'):
+        os.mkdir('static/result')
 
     # cosine calculates the cosine distance, not similiarity. Hence no need to reverse list
     top_k_ind = np.argsort([cosine(image_data, pred_row) \

@@ -50,7 +50,10 @@ def upload_img():
     result = 'static/result'
     if not gfile.Exists(result):
         os.mkdir(result)
-    shutil.rmtree(result)
+    try:
+        shutil.rmtree(result)
+    except:
+        pass
 
     if request.method == 'POST' or request.method == 'GET':
         print(request.method)
@@ -71,7 +74,10 @@ def upload_img():
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             inputloc = os.path.join(app.config['UPLOAD_FOLDER'], filename)
             recommend(inputloc, extracted_features)
-            os.remove(inputloc)
+            try:
+                os.remove(inputloc)
+            except:
+                pass
             image_path = "/result"
             image_list = [os.path.join(image_path, file) for file in os.listdir(result)
                           if not file.startswith('.')]
