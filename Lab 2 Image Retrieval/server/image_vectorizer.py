@@ -16,6 +16,7 @@ import os
 # from sklearn.neighbors import NearestNeighbors
 import pickle
 from tensorflow.python.platform import gfile
+from tqdm import tqdm
 
 BOTTLENECK_TENSOR_NAME = 'pool_3/_reshape:0'
 BOTTLENECK_TENSOR_SIZE = 2048
@@ -28,12 +29,13 @@ MAX_NUM_IMAGES_PER_CLASS = 2 ** 27 - 1  # ~134M
 
 
 def create_inception_graph():
-    """"Creates a graph from saved GraphDef file and returns a Graph object.
+    """
+    Creates a graph from saved GraphDef file and returns a Graph object.
 
-  Returns:
-    Graph holding the trained Inception network, and various tensors we'll be
-    manipulating.
-  """
+    Returns:
+        Graph holding the trained Inception network, and various tensors we'll be
+        manipulating.
+    """
     with tf.Session() as sess:
         model_filename = os.path.join(
             'imagenet', 'classify_image_graph_def.pb')
@@ -69,7 +71,8 @@ def iter_files(rootDir):
 
 # Get outputs from second-to-last layer in pre-built model
 
-img_files = iter_files('database/dataset')
+img_files = iter_files('database/dataset') # len: 2955
+
 # sandals_files = iter_files('uploads/dogs_and_cats/Sandals')
 # shoes_files = iter_files('uploads/dogs_and_cats/Shoes')
 # slippers_files = iter_files('uploads/dogs_and_cats/Slippers')
@@ -79,8 +82,9 @@ all_files = img_files  # boots_files + shoes_files + slippers_files + sandals_fi
 
 random.shuffle(all_files)
 
-num_images = 10000
+num_images = min(10000, len(all_files))
 neighbor_list = all_files[:num_images]
+
 with open('neighbor_list_recom.pickle', 'wb') as f:
     pickle.dump(neighbor_list, f)
 print("saved neighbour list")
@@ -89,15 +93,12 @@ extracted_features = np.ndarray((num_images, 2048))
 sess = tf.Session()
 graph, bottleneck_tensor, jpeg_data_tensor, resized_image_tensor = (create_inception_graph())
 
-for i, filename in enumerate(neighbor_list):
+for i, filename in tqdm(enumerate(neighbor_list), total=num_images, desc='Extract features'):
 
     image_data = gfile.FastGFile(filename, 'rb').read()
     features = run_bottleneck_on_image(sess, image_data, jpeg_data_tensor, bottleneck_tensor)
 
     extracted_features[i:i + 1] = features
-
-    if i % 250 == 0:
-        print(i)
 
 np.savetxt("saved_features_recom.txt", extracted_features)
 print("saved exttracted features")

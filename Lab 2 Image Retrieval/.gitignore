@@ -10,9 +10,9 @@ __pycache__/
 
 # Distribution / packaging
 server/database
-server/imagenet
-server/uploads
+server/static/result
 server/saved_features_recom.txt
+server/neighbor_list_recom.pickle
 .Python
 env/
 build/

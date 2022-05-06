@@ -32,7 +32,7 @@ auth = HTTPBasicAuth()
 #                                                                          						        
 #                                                                                                                              
 # ==============================================================================================================================
-extracted_features = np.zeros((10000, 2048), dtype=np.float32)
+extracted_features = np.zeros((2955, 2048), dtype=np.float32)
 with open('saved_features_recom.txt') as f:
     for i, line in enumerate(f):
         extracted_features[i, :] = line.split()
