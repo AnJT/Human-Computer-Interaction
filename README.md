@@ -2,7 +2,7 @@
 
 ## Lab1: Automatic Speech Recognition
 
-## Installation
+### Installation
 
 - install conda environment
 
@@ -29,12 +29,47 @@ conda activate asr
 python asr.py
 ```
 
-## Features
+### Function
 
 - **Play music**
 - **Open Notepad**
 - **Open the Calculator**
 
-## Interface
+### ScreenShot
 
 ![image-20220420234743809](https://typora-anjt.oss-cn-shanghai.aliyuncs.com/undefinedimage-20220420234743809.png)
+
+## Lab 2: Information Retrieval
+
+### Installation
+
+- install conda environment
+
+  ```
+  conda env create -f requirements.yaml
+  conda activate ir
+  ```
+
+### Run
+
+```
+cd server
+curl -o database.zip https://anjt.oss-cn-shanghai.aliyuncs.com/database.zip
+unzip database.zip
+
+python image_vectorizer.py
+python rest_server.py 
+```
+
+### Function
+
+- Upload a image
+- Overview the total number of the similar images
+- Overview the tags of all result
+- Click the button to download the image
+- Click on tag button to see the images which hold this tag only
+- Clear the image and choose another one
+
+### ScreenShot
+
+![image-20220508025540219](https://typora-anjt.oss-cn-shanghai.aliyuncs.com/image-20220508025540219.png)
