@@ -5,20 +5,15 @@
 # here as json and being branched out to each projects. Basic level of validation is also being done in this file. #                                                                                                                                  	       
 # -------------------------------------------------------------------------------------------------------------------------------
 ################################################################################################################################
-from flask import Flask, jsonify, abort, request, make_response, url_for, redirect, render_template
+from flask import Flask, jsonify, request, redirect, render_template
 from flask_httpauth import HTTPBasicAuth
 from werkzeug.utils import secure_filename
 import os
 import shutil
 import numpy as np
 from search import recommend
-import tarfile
-from datetime import datetime
-from scipy import ndimage
 import json
 import re
-
-# from scipy.misc import imsave
 
 UPLOAD_FOLDER = 'uploads'
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
@@ -30,9 +25,8 @@ auth = HTTPBasicAuth()
 
 # ==============================================================================================================================
 #                                                                                                                              
-#    Loading the extracted feature vectors for image retrieval                                                                 
-#                                                                          						        
-#                                                                                                                              
+#  Loading the extracted feature vectors for image retrieval                                                                 
+#                                                                          						                                                                                                                                    
 # ==============================================================================================================================
 imgs_len = len(os.listdir('database/dataset'))
 extracted_features = np.zeros((imgs_len, 2048), dtype=np.float32)
@@ -51,15 +45,11 @@ print("loaded extracted_features")
 def upload_img():
     print("image upload")
     result = 'static/result'
-    if not gfile.Exists(result):
+    if not os.path.exists(result):
         os.mkdir(result)
-    try:
-        shutil.rmtree(result)
-    except:
-        pass
+    shutil.rmtree(result, ignore_errors=True)
 
     if request.method == 'POST' or request.method == 'GET':
-        print(request.method)
         # check if the post request has the file part
         if 'file' not in request.files:
             print('No file part')
@@ -77,10 +67,8 @@ def upload_img():
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             inputloc = os.path.join(app.config['UPLOAD_FOLDER'], filename)
             recommend(inputloc, extracted_features)
-            try:
+            if os.path.exists(inputloc):
                 os.remove(inputloc)
-            except:
-                pass
             image_path = "/result"
             image_list = [os.path.join(image_path, file) for file in os.listdir(result)
                           if not file.startswith('.')]

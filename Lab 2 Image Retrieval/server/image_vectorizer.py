@@ -5,15 +5,9 @@
 ################################################################################################################################
 
 import random
-# import tensorflow.compat.v1 as tf
 import tensorflow._api.v2.compat.v1 as tf
-# tf.disable_v2_behavior()
 import numpy as np
 import os
-# from scipy import ndimage
-# from scipy.spatial.distance import cosine
-# import matplotlib.pyplot as plt
-# from sklearn.neighbors import NearestNeighbors
 import pickle
 from tensorflow.python.platform import gfile
 from tqdm import tqdm
@@ -37,8 +31,7 @@ def create_inception_graph():
         manipulating.
     """
     with tf.Session() as sess:
-        model_filename = os.path.join(
-            'imagenet', 'classify_image_graph_def.pb')
+        model_filename = os.path.join('imagenet', 'classify_image_graph_def.pb')
         with gfile.FastGFile(model_filename, 'rb') as f:
             graph_def = tf.GraphDef()
             graph_def.ParseFromString(f.read())
@@ -68,37 +61,27 @@ def iter_files(rootDir):
             iter_files(dirname)
     return all_files
 
+if __name__ == '__main__':
+    all_files = iter_files('database/dataset') # len: 2955
+    random.shuffle(all_files)
 
-# Get outputs from second-to-last layer in pre-built model
+    num_images = min(10000, len(all_files))
+    neighbor_list = all_files[:num_images]
 
-img_files = iter_files('database/dataset') # len: 2955
+    with open('neighbor_list_recom.pickle', 'wb') as f:
+        pickle.dump(neighbor_list, f)
+    print("saved neighbour list")
 
-# sandals_files = iter_files('uploads/dogs_and_cats/Sandals')
-# shoes_files = iter_files('uploads/dogs_and_cats/Shoes')
-# slippers_files = iter_files('uploads/dogs_and_cats/Slippers')
-# apparel_files = iter_files('uploads/dogs_and_cats/apparel')
+    extracted_features = np.ndarray((num_images, 2048))
+    sess = tf.Session()
+    graph, bottleneck_tensor, jpeg_data_tensor, resized_image_tensor = (create_inception_graph())
 
-all_files = img_files  # boots_files + shoes_files + slippers_files + sandals_files + apparel_files
+    for i, filename in tqdm(enumerate(neighbor_list), total=num_images, desc='Extract features'):
 
-random.shuffle(all_files)
+        image_data = gfile.FastGFile(filename, 'rb').read()
+        features = run_bottleneck_on_image(sess, image_data, jpeg_data_tensor, bottleneck_tensor)
 
-num_images = min(10000, len(all_files))
-neighbor_list = all_files[:num_images]
+        extracted_features[i:i + 1] = features
 
-with open('neighbor_list_recom.pickle', 'wb') as f:
-    pickle.dump(neighbor_list, f)
-print("saved neighbour list")
-
-extracted_features = np.ndarray((num_images, 2048))
-sess = tf.Session()
-graph, bottleneck_tensor, jpeg_data_tensor, resized_image_tensor = (create_inception_graph())
-
-for i, filename in tqdm(enumerate(neighbor_list), total=num_images, desc='Extract features'):
-
-    image_data = gfile.FastGFile(filename, 'rb').read()
-    features = run_bottleneck_on_image(sess, image_data, jpeg_data_tensor, bottleneck_tensor)
-
-    extracted_features[i:i + 1] = features
-
-np.savetxt("saved_features_recom.txt", extracted_features)
-print("saved exttracted features")
+    np.savetxt("saved_features_recom.txt", extracted_features)
+    print("saved exttracted features")

@@ -3,29 +3,16 @@
 # inputs: Input location of uploaded image, extracted vectors
 # 
 ################################################################################################################################
-import random
-import tarfile
-# import tensorflow.compat.v1 as tf
 import tensorflow._api.v2.compat.v1 as tf
 import numpy as np
 import imageio
 import os
-import scipy.io
-import time
-from datetime import datetime
-from scipy import ndimage
 
-# from scipy.misc import imsave
 imsave = imageio.imsave
 imread = imageio.imread
 from scipy.spatial.distance import cosine
-# import matplotlib.pyplot as plt
-from sklearn.neighbors import NearestNeighbors
 import pickle
-from PIL import Image
-import gc
 import os
-from tempfile import TemporaryFile
 from tensorflow.python.platform import gfile
 import json
 
@@ -37,9 +24,6 @@ MODEL_INPUT_DEPTH = 3
 JPEG_DATA_TENSOR_NAME = 'DecodeJpeg/contents:0'
 RESIZED_INPUT_TENSOR_NAME = 'ResizeBilinear:0'
 MAX_NUM_IMAGES_PER_CLASS = 2 ** 27 - 1  # ~134M
-
-
-# show_neighbors(random.randint(0, len(extracted_features)), indices, neighbor_list)
 
 def get_top_k_similar(image_data, pred, pred_final, k):
     print("total data", len(pred))
@@ -54,8 +38,6 @@ def get_top_k_similar(image_data, pred, pred_final, k):
 
     for i, neighbor in enumerate(top_k_ind):
         image = imread(pred_final[neighbor])
-        # timestr = datetime.now().strftime("%Y%m%d%H%M%S")
-        # name= timestr+"."+str(i)
         name = pred_final[neighbor]
         tokens = name.split("\\")
         img_name = tokens[-1]
