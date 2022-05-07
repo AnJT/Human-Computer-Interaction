@@ -15,6 +15,8 @@ from search import recommend
 import tarfile
 from datetime import datetime
 from scipy import ndimage
+import json
+import re
 
 # from scipy.misc import imsave
 
@@ -32,7 +34,8 @@ auth = HTTPBasicAuth()
 #                                                                          						        
 #                                                                                                                              
 # ==============================================================================================================================
-extracted_features = np.zeros((2955, 2048), dtype=np.float32)
+imgs_len = len(os.listdir('database/dataset'))
+extracted_features = np.zeros((imgs_len, 2048), dtype=np.float32)
 with open('saved_features_recom.txt') as f:
     for i, line in enumerate(f):
         extracted_features[i, :] = line.split()
@@ -81,16 +84,19 @@ def upload_img():
             image_path = "/result"
             image_list = [os.path.join(image_path, file) for file in os.listdir(result)
                           if not file.startswith('.')]
+            tag_list = []
+            with open('tag_dict.json', 'r') as f:
+                tag_dict = json.load(f)
+                for image in image_list:
+                    image_id = re.search('.*?(\d+).jpg', image).group(1)
+                    try:
+                        tag_list.append(tag_dict[f'im{image_id}.jpg'])
+                    except:
+                        tag_list.append('none')
             images = {
-                'image0': image_list[0],
-                'image1': image_list[1],
-                'image2': image_list[2],
-                'image3': image_list[3],
-                'image4': image_list[4],
-                'image5': image_list[5],
-                'image6': image_list[6],
-                'image7': image_list[7],
-                'image8': image_list[8]
+                'image_list': image_list,
+                'tag_list': tag_list,
+                'tag_set': list(set(tag_list))
             }
             return jsonify(images)
 

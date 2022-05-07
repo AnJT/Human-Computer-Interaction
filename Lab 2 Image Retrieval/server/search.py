@@ -4,6 +4,7 @@
 # 
 ################################################################################################################################
 import random
+import tarfile
 # import tensorflow.compat.v1 as tf
 import tensorflow._api.v2.compat.v1 as tf
 import numpy as np
@@ -26,6 +27,7 @@ import gc
 import os
 from tempfile import TemporaryFile
 from tensorflow.python.platform import gfile
+import json
 
 BOTTLENECK_TENSOR_NAME = 'pool_3/_reshape:0'
 BOTTLENECK_TENSOR_SIZE = 2048
@@ -107,3 +109,20 @@ def recommend(imagePath, extracted_features):
         neighbor_list = pickle.load(f)
     print("loaded images")
     get_top_k_similar(features, extracted_features, neighbor_list, k=9)
+
+
+def generate_tag_dict():
+    tag_dict = {}
+    for tag_file in os.listdir('database/tags'):
+        if tag_file == 'README.txt' or tag_file.endswith('_r1.txt'):
+            continue
+        tag = tag_file.split('.')[0]
+        tag_file_path = os.path.join('database/tags', tag_file)
+        with open(tag_file_path, 'r') as f:
+            for line in f.readlines():
+                tag_dict[f'im{line.strip()}.jpg'] = tag
+    with open('tag_dict.json','w') as f:
+        json.dump(tag_dict, f, ensure_ascii=False, indent=4, separators=(',', ':'))
+
+if __name__ == '__main__':
+    generate_tag_dict()

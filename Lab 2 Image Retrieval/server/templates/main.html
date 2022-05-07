@@ -34,7 +34,6 @@
             <td>
                 <div style="text-align: center;"><b>Chose your file to upload (Only support .jpg .png .jpeg)</b></div>
             </td>
-            <td><b></b></td>
         </tr>
         <tr>
             <td>
@@ -47,7 +46,6 @@
                             <button type="button" id="clear">Clear</button>
                         </a>
                     </div>
-
                 </form>
             </td>
         </tr>
@@ -57,7 +55,7 @@
 </div>
 
 <div style="text-align: center;">
-    <img id="load" src="/images/ajax-loader.gif" style="height:100px;weight:100px; position: absolute; visibility:hidden">
+    <img id="load" src="/images/ajax-loader.gif" style="height: 100px; weight: 100px; position: absolute; visibility:hidden">
 </div>
 
 <div id="main" class="container">
@@ -70,15 +68,18 @@
             <td class="table-td">
                 <img id="img0" class="table-td-img">
                 <img class="table-td-img-float" src="/images/download.png" alt="下载图片">
+                <button id="btn-cat-float-0" class="btn-category-float">all</button>
+
             </td>
             <td class="table-td">
                 <img id="img1" class="table-td-img">
                 <img class="table-td-img-float" src="/images/download.png" alt="下载图片">
-
+                <button id="btn-cat-float-1" class="btn-category-float">all</button>
             </td>
             <td class="table-td">
                 <img id="img2" class="table-td-img">
                 <img class="table-td-img-float" src="/images/download.png" alt="下载图片">
+                <button id="btn-cat-float-2" class="btn-category-float">all</button>
             </td>
         </tr>
 
@@ -89,32 +90,49 @@
             <td class="table-td">
                 <img id="img3" class="table-td-img">
                 <img class="table-td-img-float" src="/images/download.png" alt="下载图片">
+                <button id="btn-cat-float-3" class="btn-category-float">all</button>
             </td>
             <td class="table-td">
                 <img id="img4" class="table-td-img">
                 <img class="table-td-img-float" src="/images/download.png" alt="下载图片">
+                <button id="btn-cat-float-4" class="btn-category-float">all</button>
             </td>
             <td class="table-td">
                 <img id="img5" class="table-td-img">
                 <img class="table-td-img-float" src="/images/download.png" alt="下载图片">
+                <button id="btn-cat-float-5" class="btn-category-float">all</button>
             </td>
         </tr>
 
         <tr>
-            <td class="table-td">
-
+            <td class="table-td" style="text-align: center; vertical-align: middle!important;">
+                <button class="btn-category">all</button>
+                <button id="btn-cat-all" class="btn-category">all</button>
+                <button class="btn-category">all</button><br>
+                <button id="btn-cat-0" class="btn-category">all</button>
+                <button id="btn-cat-1" class="btn-category">all</button>
+                <button id="btn-cat-2" class="btn-category">all</button><br>
+                <button id="btn-cat-3" class="btn-category">all</button>
+                <button id="btn-cat-4" class="btn-category">all</button>
+                <button id="btn-cat-5" class="btn-category">all</button><br>
+                <button id="btn-cat-6" class="btn-category">all</button>
+                <button id="btn-cat-7" class="btn-category">all</button>
+                <button id="btn-cat-8" class="btn-category">all</button>
             </td>
             <td class="table-td">
                 <img id="img6" class="table-td-img">
                 <img class="table-td-img-float" src="/images/download.png" alt="下载图片">
+                <button id="btn-cat-float-6" class="btn-category-float">all</button>
             </td>
             <td class="table-td">
                 <img id="img7" class="table-td-img">
                 <img class="table-td-img-float" src="/images/download.png" alt="下载图片">
+                <button id="btn-cat-float-7" class="btn-category-float">all</button>
             </td>
             <td class="table-td">
                 <img id="img8" class="table-td-img">
                 <img class="table-td-img-float" src="/images/download.png" alt="下载图片">
+                <button id="btn-cat-float-8" class="btn-category-float">all</button>
             </td>
         </tr>
         </tbody>
@@ -151,11 +169,22 @@
     function fun() {
 
         $("form").submit(function (evt) {
+            // 该隐藏的隐藏
+            $('#show-p').hide()
+            $('#btn-category').hide()
+            $('.btn-category').hide()
+            $('.table-td-img-float').hide()
+            $('.btn-category-float').hide()
+            for (var item of document.getElementsByClassName('table-td-img')){
+                if (item.id == 'imgself')
+                    continue
+                item.style.visibility = 'hidden'
+            }
             evt.preventDefault()
             const formData = new FormData($(this)[0]);
 
             document.getElementById('load').style.visibility = 'visible'
-
+            
             $.ajax({
                 url: 'imgUpload',
                 type: 'POST',
@@ -166,23 +195,32 @@
                 processData: false,
 
                 success: function (response) {
-                    $('#load').hide()
+                    document.getElementById('load').style.visibility = 'hidden'
                     $('#show-p').show()
                     $('.table-td-img-float').show()
+                    $('.btn-category-float').show()
+                    $("#clear").show()
                     for (var item of document.getElementsByClassName('table-td-img'))
                         item.style.visibility = 'visible'
-
-
-                    document.getElementById("img0").src = response.image0
-                    document.getElementById("img1").src = response.image1
-                    document.getElementById("img2").src = response.image2
-                    document.getElementById("img3").src = response.image3
-                    document.getElementById("img4").src = response.image4
-                    document.getElementById("img5").src = response.image5
-                    document.getElementById("img6").src = response.image6
-                    document.getElementById("img7").src = response.image7
-                    document.getElementById("img8").src = response.image8
-                    $("#clear").show()
+                    
+                    console.log(response)
+                    for (var idx in response.image_list)
+                        document.getElementById(`img${idx}`).src = response.image_list[idx]
+                    
+                    color_list = ['#224b8f', '#72baa7', '#8f4b2e', '#f8aba6', '#bed742', '#afb4db', '#867892', '#cd9a5b', '#b76f40']
+                    $('#btn-cat-all').show()
+                    for (var idx in response.tag_set){
+                        document.getElementById(`btn-cat-${idx}`).style.backgroundColor = color_list[idx]
+                        document.getElementById(`btn-cat-${idx}`).style.borderColor = color_list[idx]
+                        document.getElementById(`btn-cat-${idx}`).innerHTML = response.tag_set[idx]
+                        $(`#btn-cat-${idx}`).show()
+                    }
+                    for (var idx in response.tag_list){
+                        color_idx = response.tag_set.indexOf(response.tag_list[idx])
+                        document.getElementById(`btn-cat-float-${idx}`).style.backgroundColor = color_list[color_idx]
+                        document.getElementById(`btn-cat-float-${idx}`).style.borderColor = color_list[color_idx]
+                        document.getElementById(`btn-cat-float-${idx}`).innerHTML = response.tag_list[idx]
+                    }
                 }
             })
             return false
@@ -202,7 +240,6 @@
         border-left-width: 1px;
         border-bottom-width: 1px;
         border-right-width: 1px;
-
     }
 
     img.table-td-img {
@@ -223,19 +260,52 @@
         right:15px;
         z-index: 10;
         width: 10%;
-        transition: all 0.5s;
+        transition: all 0.1s;
         display: none;
     }
 
     img.table-td-img-float:hover{
-        position: absolute;
-        bottom:15px;
-        right:15px;
-        z-index: 10;
-        width: 10%;
-        transition: all 0.5s;
-        transform: scale(1.5, 1.5);
+        transition: all 0.1s;
+        transform: scale(1.2, 1.2);
     }
+
+    img.table-td-img-float:active{
+        transition: all 0.1s;
+        transform: scale(1, 1);
+    }
+
+    button.btn-category-float{
+        position: absolute;
+        border: none;
+        top:15px;
+        left: 15px;
+        z-index: 10;
+        width: 30% ;
+        color: white;
+        display: none;
+    }
+
+    button.btn-category{
+        margin: 5px auto;
+        width: 30%;
+        height: 20%;
+        display: none;
+        color: white;
+        background-color: black;
+        transition: all 0.2s;
+    }
+
+    button.btn-category:hover{
+        transition: all 0.1s;
+        transform: scale(1.1, 1.1);
+    }
+
+    button.btn-category:active{
+        transition: all 0.1s;
+        transform: scale(1, 1);
+    }
+
+
 </style>
 
 </body>
