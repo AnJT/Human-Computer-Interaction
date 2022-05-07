@@ -20,7 +20,7 @@
 
 </head>
 
-<body style="background-image: url('/images/lani.png'); background-size: cover">
+<body style="background-color: #464547;">
 
 <div class="navbar">
     <h1 class="text-center" style="color:white"><b>IMAGE SEARCH DEMO </b></h1>
@@ -29,8 +29,8 @@
 
 <div id="search-main" class="container">
     <table class="table"
-           style="background: white;border: 1px solid beige;box-shadow: 3px 5px 15px 0 rgba(0, 0, 0, 0.2), 3px 5px 15px 0 rgba(0, 0, 0, 0.19);">
-        <tr style="background: lightgrey;">
+           style="background: #999d9c;border: 1px solid beige;box-shadow: 3px 5px 15px 0 rgba(0, 0, 0, 0.2), 3px 5px 15px 0 rgba(0, 0, 0, 0.19);">
+        <tr style="background: #999d9c;">
             <td>
                 <div style="text-align: center;"><b>Chose your file to upload (Only support .jpg .png .jpeg)</b></div>
             </td>
@@ -153,6 +153,22 @@
             };
         }
     });
+
+    $('.btn-category').click(function () {
+        tag = this.innerHTML
+        console.log(tag)
+        for(var tagFloat of document.getElementsByClassName('btn-category-float')){
+            if (tagFloat.innerHTML == tag || tag == 'all'){
+                tagFloat.parentNode.style.visibility = 'visible'
+                tagFloat.parentNode.childNodes[1].style.display = 'block'
+                tagFloat.style.display = 'block'
+                continue
+            }
+            tagFloat.parentNode.childNodes[1].style.display = 'none'
+            tagFloat.style.display = 'none'
+            tagFloat.parentNode.style.visibility = 'hidden'
+        }
+    })
 
     // 下载图片
     $('.table-td-img-float').click(function () {
