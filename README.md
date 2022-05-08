@@ -72,4 +72,4 @@ python rest_server.py
 
 ### ScreenShot
 
-![image-20220508025540219](https://typora-anjt.oss-cn-shanghai.aliyuncs.com/2.png)
+![image-20220508025540219](https://typora-anjt.oss-cn-shanghai.aliyuncs.com/3.png)
