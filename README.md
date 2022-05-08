@@ -43,12 +43,12 @@ python asr.py
 
 ### Installation
 
-- install conda environment
+install conda environment
 
-  ```
-  conda env create -f requirements.yaml
-  conda activate ir
-  ```
+```
+conda env create -f requirements.yaml
+conda activate ir
+```
 
 ### Run
 

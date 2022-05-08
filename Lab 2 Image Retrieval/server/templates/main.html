@@ -215,13 +215,12 @@
                     $('#show-p').show()
                     $('.table-td-img-float').show()
                     $('.btn-category-float').show()
-                    $("#clear").show()
-                    for (var item of document.getElementsByClassName('table-td-img'))
-                        item.style.visibility = 'visible'
                     
                     console.log(response)
-                    for (var idx in response.image_list)
+                    for (var idx in response.image_list){
                         document.getElementById(`img${idx}`).src = response.image_list[idx]
+                        document.getElementById(`img${idx}`).style.visibility = 'visible'
+                    }
                     
                     color_list = ['#224b8f', '#72baa7', '#8f4b2e', '#f8aba6', '#bed742', '#afb4db', '#867892', '#cd9a5b', '#b76f40']
                     $('#btn-cat-all').show()
