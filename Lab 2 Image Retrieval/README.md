@@ -147,7 +147,7 @@ Users can see all the images in the search results
 
 #### Show all labels
 
-Users can see the picture label in the search results, and can click the label to view the pictures containing only this label
+Users can see the image label in the search results, and can click the label to view the iamge containing only this label
 
 - ```html
   <button id="btn-cat-0" class="btn-category">all</button>
