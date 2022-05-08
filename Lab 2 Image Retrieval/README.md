@@ -74,7 +74,7 @@ python rest_server.py
 
 #### After clicking search
 
-![image-20220508025540219](https://typora-anjt.oss-cn-shanghai.aliyuncs.com/image-20220508025540219.png)
+![image-20220508025540219](https://typora-anjt.oss-cn-shanghai.aliyuncs.com/3.png)
 
 #### Show only one kind of image
 
