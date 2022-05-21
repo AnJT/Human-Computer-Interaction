@@ -73,3 +73,32 @@ python rest_server.py
 ### ScreenShot
 
 ![image-20220508025540219](https://typora-anjt.oss-cn-shanghai.aliyuncs.com/3.png)
+
+## Lab 3: Data Visualization
+
+### Installation
+
+install conda environment
+
+```
+conda env create -f requirements.yaml
+conda activate dv
+```
+
+### Run
+
+```
+cd src
+python app.py 
+```
+
+### Analysis task
+
+- Analyze the relationship between salary level and school type
+- Analyze the relationship between salary level and geographical location
+- Analyze the relationship between salary changes and school types
+- Analyze the relationship between salary changes and geographical location
+
+### ScreenShot
+
+![image-20220522001344274](https://typora-anjt.oss-cn-shanghai.aliyuncs.com/image-20220522001344274.png)
