@@ -35,9 +35,9 @@ python app.py
 
   ![QQ录屏20220522003255 00_00_00-00_00_30](https://typora-anjt.oss-cn-shanghai.aliyuncs.com/QQ%E5%BD%95%E5%B1%8F20220522003255%2000_00_00-00_00_30.gif)
 
-- The sunburst chart in the lower left corner shows all school types or regions in the inner ring, and the university name after salary sorting according to the algorithm selected in the third menu in the outer ring. Put the mouse into the chart, and the broken line chart in the lower right corner will show the data of a university in detail
+- The sunburst chart in the lower left corner shows all school types or regions in the inner ring, and the university name after salary sorting according to the algorithm selected in the third menu in the outer ring. Put the mouse into the chart, and the broken line chart in the lower right corner will show the data of a university in detail.
 
-![QQ录屏20220522002812 00_00_00-00_00_30](https://typora-anjt.oss-cn-shanghai.aliyuncs.com/QQ%E5%BD%95%E5%B1%8F20220522002812%2000_00_00-00_00_30.gif)
+  ![QQ录屏20220522002812 00_00_00-00_00_30](https://typora-anjt.oss-cn-shanghai.aliyuncs.com/QQ%E5%BD%95%E5%B1%8F20220522002812%2000_00_00-00_00_30.gif)
 
 ### ScreenShot
 
